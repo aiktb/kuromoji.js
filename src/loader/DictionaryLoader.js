@@ -46,14 +46,14 @@ DictionaryLoader.prototype.load = function (load_callback) {
         var separator = '/';
         var replace = new RegExp(separator+'{1,}', 'g');
         var path = [dic_path, filename].join(separator).replace(replace, separator);
-
+        console.log(path);
         return path;
     }
 
     async.parallel([
         // Trie
         function (callback) {
-            async.map([ "base.dat.gz", "check.dat.gz" ], function (filename, _callback) {
+            async.map([ "base.dat", "check.dat" ], function (filename, _callback) {
                 loadArrayBuffer(dic_path_url(filename), function (err, buffer) {
                     if(err) {
                         return _callback(err);
@@ -73,7 +73,7 @@ DictionaryLoader.prototype.load = function (load_callback) {
         },
         // Token info dictionaries
         function (callback) {
-            async.map([ "tid.dat.gz", "tid_pos.dat.gz", "tid_map.dat.gz" ], function (filename, _callback) {
+            async.map([ "tid.dat", "tid_pos.dat", "tid_map.dat" ], function (filename, _callback) {
                 loadArrayBuffer(dic_path_url(filename), function (err, buffer) {
                     if(err) {
                         return _callback(err);
@@ -94,7 +94,7 @@ DictionaryLoader.prototype.load = function (load_callback) {
         },
         // Connection cost matrix
         function (callback) {
-            loadArrayBuffer(dic_path_url("cc.dat.gz"), function (err, buffer) {
+            loadArrayBuffer(dic_path_url("cc.dat"), function (err, buffer) {
                 if(err) {
                     return callback(err);
                 }
@@ -105,7 +105,7 @@ DictionaryLoader.prototype.load = function (load_callback) {
         },
         // Unknown dictionaries
         function (callback) {
-            async.map([ "unk.dat.gz", "unk_pos.dat.gz", "unk_map.dat.gz", "unk_char.dat.gz", "unk_compat.dat.gz", "unk_invoke.dat.gz" ], function (filename, _callback) {
+            async.map([ "unk.dat", "unk_pos.dat", "unk_map.dat", "unk_char.dat", "unk_compat.dat", "unk_invoke.dat" ], function (filename, _callback) {
                 loadArrayBuffer(dic_path_url(filename), function (err, buffer) {
                     if(err) {
                         return _callback(err);
