@@ -1,29 +1,27 @@
 {
-  "name": "@sglkc/kuromoji",
+  "name": "@aiktb/kuromoji",
   "description": "Forked version of kuromoji with better compatibility for browsers",
-  "version": "1.1.0",
-  "author": "sglkc",
+  "version": "1.0.0",
+  "author": "aiktb",
   "browser": {
     "./src/loader/NodeDictionaryLoader.js": "./src/loader/BrowserDictionaryLoader.js"
   },
-  "bugs": {
-    "url": "https://github.com/sglkc/kuromoji.js/issues"
-  },
-  "homepage": "https://github.com/sglkc/kuromoji.js",
+  "homepage": "https://github.com/aiktb/kuromoji.js",
   "keywords": [
     "japanese",
     "morphological analyzer",
     "nlp",
     "pos",
     "pos tagger",
-    "tokenizer"
+    "tokenizer",
+    "browser"
   ],
   "license": "Apache-2.0",
   "main": "./src/kuromoji.js",
   "types": "./src/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sglkc/kuromoji.js.git"
+    "url": "https://github.com/aiktb/kuromoji.js.git"
   },
   "scripts": {
     "build": "gulp build",

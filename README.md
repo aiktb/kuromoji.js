@@ -1,104 +1,21 @@
-kuromoji.js
-===========
+# @aiktb/kuromoji
 
-[![Build Status](https://travis-ci.org/takuyaa/kuromoji.js.svg?branch=master)](https://travis-ci.org/takuyaa/kuromoji.js)
-[![Coverage Status](https://coveralls.io/repos/github/takuyaa/kuromoji.js/badge.svg?branch=master)](https://coveralls.io/github/takuyaa/kuromoji.js?branch=master)
-[![npm version](https://badge.fury.io/js/kuromoji.svg)](https://badge.fury.io/js/kuromoji)
-[![dependencies](https://david-dm.org/takuyaa/kuromoji.js.svg)](https://david-dm.org/takuyaa/kuromoji.js)
-[![Code Climate](https://codeclimate.com/github/takuyaa/kuromoji.js/badges/gpa.svg)](https://codeclimate.com/github/takuyaa/kuromoji.js)
-[![Downloads](https://img.shields.io/npm/dm/kuromoji.svg)](https://www.npmjs.com/package/kuromoji)
+# Why need this fork?
 
-JavaScript implementation of Japanese morphological analyzer.
-This is a pure JavaScript porting of [Kuromoji](https://www.atilika.com/ja/kuromoji/).
+This is a special purpose version of kuromoji that allows serving `*.dat` instead of `*.dat.gz` files.
+The logic about file decompression has been removed from the code. If you are curious why this is needed, please check https://github.com/aiktb/FuriganaMaker/issues/21.
 
-You can see how kuromoji.js works in [demo site](https://takuyaa.github.io/kuromoji.js/demo/tokenize.html).
+# Why forked by @sglkc/kuromoji?
 
+@aiktb/Kuromoji forked by [@sglkc/kuromoji](https://github.com/sglkc/kuromoji.js), @sglkc/kuromoji forked by kuromoji.js.
 
-Directory
----------
+@sglkc/kuromoji is a very good kuromoji fork. Now that kuromoji.js has stopped maintaining, it provides many modern features, such as browser support, service worker support, etc. For details, please check my blog:
+[Stop Using kuromoji.js: @sglkc/kuromoji is a Better, More Modern Fork](https://aiktb.dev/blog/better-kuromoji-fork)
 
-Directory tree is as follows:
+> [!CAUTION]
+> This fork has no long-term maintenance plans and has only been tested in the browser. No issues will be accepted.
+> If you need anything, please create a fork or open a PR.
 
-    build/
-      kuromoji.js -- JavaScript file for browser (Browserified)
-    demo/         -- Demo
-    dict/         -- Dictionaries for tokenizer (gzipped)
-    example/      -- Examples to use in Node.js
-    src/          -- JavaScript source
-    test/         -- Unit test
+# How to use
 
-
-Usage
------
-
-You can tokenize sentences with only 5 lines of code.
-If you need working examples, you can see the files under the demo or example directory.
-
-
-### Node.js
-
-Install with npm package manager:
-
-    npm install kuromoji
-
-Load this library as follows:
-
-    var kuromoji = require("kuromoji");
-
-You can prepare tokenizer like this:
-
-    kuromoji.builder({ dicPath: "path/to/dictionary/dir/" }).build(function (err, tokenizer) {
-        // tokenizer is ready
-        var path = tokenizer.tokenize("すもももももももものうち");
-        console.log(path);
-    });
-
-
-
-### Browser
-
-You only need the build/kuromoji.js and dict/*.dat.gz files
-
-Install with Bower package manager:
-
-    bower install kuromoji
-
-Or you can use the kuromoji.js file and dictionary files from the GitHub repository.
-
-In your HTML:
-
-    <script src="url/to/kuromoji.js"></script>
-
-In your JavaScript:
-
-    kuromoji.builder({ dicPath: "/url/to/dictionary/dir/" }).build(function (err, tokenizer) {
-        // tokenizer is ready
-        var path = tokenizer.tokenize("すもももももももものうち");
-        console.log(path);
-    });
-
-
-API
----
-
-The function tokenize() returns an JSON array like this:
-
-    [ {
-        word_id: 509800,          // 辞書内での単語ID
-        word_type: 'KNOWN',       // 単語タイプ(辞書に登録されている単語ならKNOWN, 未知語ならUNKNOWN)
-        word_position: 1,         // 単語の開始位置
-        surface_form: '黒文字',    // 表層形
-        pos: '名詞',               // 品詞
-        pos_detail_1: '一般',      // 品詞細分類1
-        pos_detail_2: '*',        // 品詞細分類2
-        pos_detail_3: '*',        // 品詞細分類3
-        conjugated_type: '*',     // 活用型
-        conjugated_form: '*',     // 活用形
-        basic_form: '黒文字',      // 基本形
-        reading: 'クロモジ',       // 読み
-        pronunciation: 'クロモジ'  // 発音
-      } ]
-
-(This is defined in src/util/IpadicFormatter.js)
-
-See also [JSDoc page](https://takuyaa.github.io/kuromoji.js/jsdoc/) in details.
+Compatible with [kuromoji.js API](https://github.com/takuyaa/kuromoji.js), the only difference is that please provide the directory where the `*.dat` files are stored.
