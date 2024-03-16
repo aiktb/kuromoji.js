@@ -44,24 +44,23 @@ DictionaryLoader.prototype.load = function (load_callback) {
     var loadArrayBuffer = this.loadArrayBuffer;
     var dic_path_url = function (filename) {
         var separator = '/';
-        var replace = new RegExp(separator+'{1,}', 'g');
+        var replace = new RegExp(separator + '{1,}', 'g');
         var path = [dic_path, filename].join(separator).replace(replace, separator);
-        console.log(path);
         return path;
     }
 
     async.parallel([
         // Trie
         function (callback) {
-            async.map([ "base.dat", "check.dat" ], function (filename, _callback) {
+            async.map(["base.dat", "check.dat"], function (filename, _callback) {
                 loadArrayBuffer(dic_path_url(filename), function (err, buffer) {
-                    if(err) {
+                    if (err) {
                         return _callback(err);
                     }
                     _callback(null, buffer);
                 });
             }, function (err, buffers) {
-                if(err) {
+                if (err) {
                     return callback(err);
                 }
                 var base_buffer = new Int32Array(buffers[0]);
@@ -73,15 +72,15 @@ DictionaryLoader.prototype.load = function (load_callback) {
         },
         // Token info dictionaries
         function (callback) {
-            async.map([ "tid.dat", "tid_pos.dat", "tid_map.dat" ], function (filename, _callback) {
+            async.map(["tid.dat", "tid_pos.dat", "tid_map.dat"], function (filename, _callback) {
                 loadArrayBuffer(dic_path_url(filename), function (err, buffer) {
-                    if(err) {
+                    if (err) {
                         return _callback(err);
                     }
                     _callback(null, buffer);
                 });
             }, function (err, buffers) {
-                if(err) {
+                if (err) {
                     return callback(err);
                 }
                 var token_info_buffer = new Uint8Array(buffers[0]);
@@ -95,7 +94,7 @@ DictionaryLoader.prototype.load = function (load_callback) {
         // Connection cost matrix
         function (callback) {
             loadArrayBuffer(dic_path_url("cc.dat"), function (err, buffer) {
-                if(err) {
+                if (err) {
                     return callback(err);
                 }
                 var cc_buffer = new Int16Array(buffer);
@@ -105,15 +104,15 @@ DictionaryLoader.prototype.load = function (load_callback) {
         },
         // Unknown dictionaries
         function (callback) {
-            async.map([ "unk.dat", "unk_pos.dat", "unk_map.dat", "unk_char.dat", "unk_compat.dat", "unk_invoke.dat" ], function (filename, _callback) {
+            async.map(["unk.dat", "unk_pos.dat", "unk_map.dat", "unk_char.dat", "unk_compat.dat", "unk_invoke.dat"], function (filename, _callback) {
                 loadArrayBuffer(dic_path_url(filename), function (err, buffer) {
-                    if(err) {
+                    if (err) {
                         return _callback(err);
                     }
                     _callback(null, buffer);
                 });
             }, function (err, buffers) {
-                if(err) {
+                if (err) {
                     return callback(err);
                 }
                 var unk_buffer = new Uint8Array(buffers[0]);
